@@ -1,23 +1,19 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    <router-view></router-view>
+    <md-toolbar>
+      <h1 class="md-title">world migrations</h1>
+    </md-toolbar>
+    <worldMap></worldMap>
   </div>
 </template>
 
 <script>
+import WorldMap from './components/WorldMap.vue'
+
 export default {
-  name: 'app'
+  name: 'app',
+  components: {
+    WorldMap
+  }
 }
 </script>
-
-<style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>

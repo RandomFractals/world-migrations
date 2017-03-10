@@ -1,5 +1,5 @@
 <template>
-  <div class="worldMap">
+  <div id="map" class="map">
     <h1>{{ msg }}</h1>
   </div>
 </template>
@@ -15,8 +15,16 @@ export default {
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+#map {
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+  margin-top: 60px;
+}
+
 h1, h2 {
   font-weight: normal;
 }
