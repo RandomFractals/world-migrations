@@ -2,7 +2,21 @@
   <div id="app">
     <toolBar></toolBar>
     <div class="content">
-      <worldMap></worldMap>
+      <md-layout md-gutter>
+        <!-- graph column -->
+        <md-layout md-column md-gutter>
+          <md-layout md-flex="20">todo: add action bar</md-layout>
+          <md-layout>
+            <worldMap></worldMap>
+          </md-layout>
+        </md-layout>
+        <!-- list column -->
+        <md-layout md-column md-gutter>
+          <md-layout md-flex="50">list table</md-layout>
+          <md-layout></md-layout>
+          <md-layout></md-layout>
+        </md-layout>
+      </md-layout>      
     </div>
     <bottomBar></bottomBar>
   </div>
