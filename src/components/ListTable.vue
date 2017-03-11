@@ -42,7 +42,6 @@ export default {
 <style scoped>
 
 /* List Table View styles */
-
 .list-card {
   width: 240px;
 }

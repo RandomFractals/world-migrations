@@ -20,7 +20,6 @@ export default {
 <style>
 
 /* Toolbar styles */
-
 .toolbar {
   min-height: 32px;
   border-bottom: 1px solid rgba(#000, .12);
