@@ -29,11 +29,6 @@ export default {
 <style scoped>
 
 /* Map styles */
-.map-card {
-  float: left;
-  width: auto;
-}
-
 .map-container {
   margin: 0px;
   height: 100%;

@@ -36,18 +36,28 @@ html, body, #app {
 }
 
 .app-content {
-  padding: 0px;
   height: 100%;
-  display: flex;
-  flex-flow: column nowrap;
-  flex: 1;
+  width: 100%;
   overflow: hidden;
   background-color: #fff;
+  display: -ms-flex;
+  display: -webkit-flex;
+  display: flex;
+}
+
+.map-card {
+  float: left;
+  width: 80%;
+}
+
+.list-card {
+  float: right;
+  width: 20%;
 }
   
 /* Material UI app Card(s) styles */
 .card {
-  margin: 5px;
+  margin: 3px;
   border-radius: 1px;
   box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
   transition: all 0.3s cubic-bezier(.25,.8,.25,1);

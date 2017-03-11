@@ -39,21 +39,14 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 
 /* List Table View styles */
-.list-card {
-  width: 240px;
-  float: right;
-  position: absolute;
-  right: 0px;
-}
-
 .list-container {
   margin: 0px;
-  height: 100%;
   width: 100%;
-  overflow-y: scroll;  
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 table {
