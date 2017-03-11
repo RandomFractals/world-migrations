@@ -7,20 +7,20 @@
       </md-card-header>
       <md-card-content>
         <div id="data-list" class="list-container">
-          <md-table md-sort="migrants">
-            <md-table-header>
-              <md-table-row>
-                <md-table-head>country</md-table-head>
-                <md-table-head md-numeric>migrants</md-table-head>
-              </md-table-row>
-            </md-table-header>
-            <md-table-body>
-              <md-table-row v-for="(row, index) in 20" :key="index">
-                <md-table-cell>[country]</md-table-cell>
-                <md-table-cell v-for="(col, index) in 1" :key="index" md-numeric>100</md-table-cell>
-              </md-table-row>
-            </md-table-body>
-          </md-table>
+          <table>
+            <thead>
+              <tr>
+                <th>country</th>
+                <th md-numeric>migrants</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="(row, index) in 20" :key="index">
+                <td>[country]</td>
+                <td v-for="(col, index) in 1" :key="index" md-numeric>100</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </md-card-content>
     </md-card-area>
