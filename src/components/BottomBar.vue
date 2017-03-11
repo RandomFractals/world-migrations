@@ -24,6 +24,11 @@ export default {
 </script>
 
 <style>
+#footer {
+  position: absolute;
+  bottom: 0px;
+}
+
 .md-caption {
   font-size: 0.8em;
   padding-left: 5px;
@@ -31,5 +36,6 @@ export default {
 
 a {
   font-size: 0.8em;
+  text-decoration: none
 }
 </style>
