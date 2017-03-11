@@ -11,7 +11,9 @@
         </md-layout>
         <!-- list column -->
         <md-layout md-column md-gutter>
-          <md-layout md-flex="50">list table</md-layout>
+          <md-layout md-flex="50">
+            <listTable></listTable>
+          </md-layout>
         </md-layout>
       </md-layout>      
     </div>
@@ -22,6 +24,7 @@
 <script>
 import ToolBar from './components/ToolBar.vue'
 import WorldMap from './components/WorldMap.vue'
+import ListTable from './components/ListTable.vue'
 import BottomBar from './components/BottomBar.vue'
 
 export default {
@@ -29,6 +32,7 @@ export default {
   components: {
     ToolBar,
     WorldMap,
+    ListTable,
     BottomBar
   }
 }
