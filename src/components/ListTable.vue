@@ -2,8 +2,8 @@
   <md-card class="card list-card">
     <md-card-area md-inset>
       <md-card-header class="card-header">
-        <div class="md-title">{{ title }}</div>
-        <div class="md-subhead">{{ subtitle }}</div>      
+        <div class="card-title md-title">{{ title }}</div>
+        <div class="card-subtitle md-subhead">{{ subtitle }}</div>      
       </md-card-header>
       <md-card-content>
         <div id="data-list" class="list-container">
@@ -11,10 +11,9 @@
             <md-table-header>
               <md-table-row>
                 <md-table-head>country</md-table-head>
-                <md-table-head md-numeric md-tooltip="Migrants">migrants</md-table-head>
+                <md-table-head md-numeric>migrants</md-table-head>
               </md-table-row>
             </md-table-header>
-
             <md-table-body>
               <md-table-row v-for="(row, index) in 20" :key="index">
                 <md-table-cell>[country]</md-table-cell>
@@ -41,6 +40,8 @@ export default {
 </script>
 
 <style scoped>
+
+/* List Table View styles */
 
 .list-card {
   width: 240px;

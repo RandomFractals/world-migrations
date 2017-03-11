@@ -2,8 +2,8 @@
   <md-card class="card">
     <md-card-area md-inset>
       <md-card-header class="card-header">
-        <div class="md-title">{{ title }}</div>
-        <div class="md-subhead">{{ subtitle }}</div>      
+        <div class="card-title md-title">{{ title }}</div>
+        <div class="card-subtitle md-subhead">{{ subtitle }}</div>      
       </md-card-header>
       <md-card-content>
         <div id="map" class="map-container">
@@ -28,9 +28,11 @@ export default {
 
 <style scoped>
 
+/* Map styles */
 .map-container {
   margin: 0px;
   height: 100%;
   width: 100%;  
 }
+
 </style>

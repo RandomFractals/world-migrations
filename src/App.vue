@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <toolBar></toolBar>
-    <div class="content">
+    <div class="app-content">
       <md-layout md-gutter>
         <!-- graph column -->
         <md-layout md-column md-gutter>
@@ -39,20 +39,15 @@ export default {
 </script>
 
 <style>
-html,
-body, 
-#app {
+
+/* App page/content styles */
+html, body, #app {
   height: 100%;
   margin: 0px;
   overflow: hidden;
 }
 
-.md-toolbar {
-  min-height: 32px;
-  border-bottom: 1px solid rgba(#000, .12);
-}
-
-.content {
+.app-content {
   padding: 8px;
   height: 100%;
   display: flex;
@@ -62,6 +57,7 @@ body,
   background-color: #fff;
 }
   
+/* Material UI app Card(s) styles */
 .card {
   border-radius: 2px;
   box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
@@ -72,11 +68,11 @@ body,
   box-shadow: 0 8px 16px rgba(0,0,0,0.25), 0 4px 4px rgba(0,0,0,0.22);
 }
 
-.md-title {
+.card-title {
   padding: 5px;
 }
 
-.md-subhead {
+.card-subtitle {
   font-size: 0.8em;
   color: dimgrey;
   padding-left: 5px;
