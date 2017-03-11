@@ -1,5 +1,5 @@
 <template>
-  <md-card class="card">
+  <md-card class="card map-card">
     <md-card-area md-inset>
       <md-card-header class="card-header">
         <div class="card-title md-title">{{ title }}</div>
@@ -29,10 +29,16 @@ export default {
 <style scoped>
 
 /* Map styles */
+.map-card {
+  float: left;
+  width: auto;
+}
+
 .map-container {
   margin: 0px;
   height: 100%;
-  width: 100%;  
+  width: 100%;
+  overflow: hidden;  
 }
 
 </style>

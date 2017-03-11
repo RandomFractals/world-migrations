@@ -44,6 +44,9 @@ export default {
 /* List Table View styles */
 .list-card {
   width: 240px;
+  float: right;
+  position: absolute;
+  right: 0px;
 }
 
 .list-container {

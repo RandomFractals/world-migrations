@@ -2,20 +2,8 @@
   <div id="app">
     <toolBar></toolBar>
     <div class="app-content">
-      <md-layout md-gutter>
-        <!-- graph column -->
-        <md-layout md-column md-gutter>
-          <md-layout>
-            <worldMap></worldMap>
-          </md-layout>
-        </md-layout>
-        <!-- list column -->
-        <md-layout md-column md-gutter>
-          <md-layout md-flex="50">
-            <listTable></listTable>
-          </md-layout>
-        </md-layout>
-      </md-layout>      
+      <worldMap></worldMap>
+      <listTable></listTable>
     </div>
     <bottomBar></bottomBar>
   </div>
@@ -53,7 +41,7 @@ html, body, #app {
   display: flex;
   flex-flow: column nowrap;
   flex: 1;
-  overflow: auto;
+  overflow: hidden;
   background-color: #fff;
 }
   
@@ -78,5 +66,15 @@ html, body, #app {
   padding-left: 5px;
 }
   
+/* div magic styles */
+.show {
+	display: block;
+}
+
+.hide {
+	display: none;
+}
+
+
 </style>
 
