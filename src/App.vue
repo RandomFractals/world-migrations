@@ -40,14 +40,10 @@ export default {
 <style>
   html,
   body, 
-  content,
   #app {
     height: 100%;
-    overflow: hidden;
-  }
-
-  body, #app {
     margin: 0px;
+    overflow: hidden;
   }
 
   .md-toolbar {
@@ -55,15 +51,11 @@ export default {
     border-bottom: 1px solid rgba(#000, .12);
   }
 
- .container {
-    min-height: 100%;
+  .content {
+    padding: 8px;
+    height: 100%;
     display: flex;
     flex-flow: column nowrap;
-    flex: 1;
-  }  
-
-  .content {
-    padding: 16px;
     flex: 1;
     overflow: auto;
     background-color: #fff;
