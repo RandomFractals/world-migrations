@@ -4,18 +4,21 @@
     <div class="content">
       <worldMap></worldMap>
     </div>
+    <bottomBar></bottomBar>
   </div>
 </template>
 
 <script>
 import ToolBar from './components/ToolBar.vue'
 import WorldMap from './components/WorldMap.vue'
+import BottomBar from './components/BottomBar.vue'
 
 export default {
   name: 'app',
   components: {
     ToolBar,
-    WorldMap
+    WorldMap,
+    BottomBar
   }
 }
 </script>

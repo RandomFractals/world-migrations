@@ -1,8 +1,8 @@
 <template>
-<div class="md-toolbar-container">
-  <md-toolbar id="toolbar" class="md-large">
-    <h3 class="md-title" style="flex: 1">{{ title }}</h3>
-  </md-toolbar>
+  <div class="md-toolbar-container">
+    <md-toolbar id="toolbar" class="md-large">
+      <h3 class="md-title" style="flex: 1">{{ title }}</h3>
+    </md-toolbar>
   </div>
 </template>
 
