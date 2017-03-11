@@ -53,7 +53,33 @@ export default {
   overflow-y: scroll;  
 }
 
-.md-table-row {
-  font-size: 0.8em;
+table {
+	border-width: 1px;
+	border-color: #666;
+	border-collapse: collapse;
+	border-style: solid;
+	width: 100%;
 }
+
+th {
+	background-color: #efefef;
+  color: #333;
+	font-size: 12px;
+  font-weight: normal;	
+}
+
+td, th {
+  font-size: 0.8em;
+  padding: 5px;
+	border-width: 1px;	
+	border-color: #ddd;
+	border-collapse: collapse;
+	border-style: solid;		
+  cursor: pointer;	
+}
+
+tr:hover {
+	background-color: #ffffcc;
+}
+
 </style>
