@@ -9,6 +9,9 @@ import VueMaterial from 'vue-material'
 // import 'vue-material/dist/vue-material.css'
 
 Vue.use(VueMaterial) // for all
+// OR
+// Vue.use(VueMaterial.mdCore) // required to boot vue material
+// Vue.use(VueMaterial.mdToolbar)
 
 Vue.material.registerTheme('default', {
   primary: 'blue',
