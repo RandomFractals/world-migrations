@@ -2,6 +2,21 @@
 
 > Word Migrations Data Viz
 
+## app dev blog
+
+https://www.linkedin.com/pulse/world-migrations-taras-novak
+
+## app dev status
+
+from day 2 of dev (simple 80/20 app vue layout setup)
+
+![Alt text]https://github.com/RandomFractals/world-migrations/blob/master/screens/worldMigrations80-20MapListSplitLayout.png?raw=true 
+ "latest") 
+
+next up: day 3 of dev: mapping the world with d3 v4
+
+http://techslides.com/demos/d3/worldmap-template-d3v4.html
+
 ## Build Setup
 
 ``` bash
