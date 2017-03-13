@@ -10,13 +10,13 @@ https://www.linkedin.com/pulse/world-migrations-taras-novak
 
 from day 2 of dev (simple 80/20 app vue layout setup)
 
-[[https://github.com/RandomFractals/world-migrations/blob/master/screens/worldMigrations80-20MapListSplitLayout.png|alt=latest]]
+![alt tag](https://github.com/RandomFractals/world-migrations/blob/master/screens/worldMigrations80-20MapListSplitLayout.png)
 
 next up: day 3 of dev: mapping the world with d3 v4
 
 http://techslides.com/demos/d3/worldmap-template-d3v4.html
 
-[[https://github.com/RandomFractals/world-migrations/blob/master/screens/d3V4WroldMap.png|alt=d3V4WorldMap]]
+![alt tag](https://github.com/RandomFractals/world-migrations/blob/master/screens/d3V4WorldMap.png)
 
 ## Build Setup
 
