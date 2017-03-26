@@ -40,7 +40,7 @@ const mapToolTip = d3.select('#map-container').append('div').attr('class', 'tool
 var mapContainer, mapWidth, mapHeight;
 
 // map svg vars
-var mapSvg, mapProjection, topo, geoPath, g;
+var mapSvg, mapProjection, geoPath, topology, g;
 
 export default {
   name: 'worldMap',
@@ -65,6 +65,15 @@ export default {
 
     // add window resize handler
     d3.select(window).on('resize', onWindowResize);
+
+    // load world topojson
+    d3.json("data/world-topo-min.json", function(error, world) {
+      var countries = topojson.feature(world, world.objects.countries).features;
+      topology = countries;
+      console.log('WorldMap.loadTopology(): regions count:', countries.length);
+      //draw(topology);
+    });
+
   }
 }
 
@@ -137,7 +146,7 @@ function redraw() {
   d3.select('svg').remove();
   createMapSvg(mapWidth, mapHeight);
 
-  //draw(topo);
+  //draw(topology);
 }
 </script>
 
