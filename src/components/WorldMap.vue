@@ -71,7 +71,9 @@ export default {
       var countries = topojson.feature(world, world.objects.countries).features;
       topology = countries;
       console.log('WorldMap.loadTopology(): regions count:', countries.length);
-      //draw(topology);
+
+      // draw map topology
+      draw(topology);
     });
 
   }
@@ -142,12 +144,51 @@ function redraw() {
   mapHeight = mapWidth/2;
   console.log(`WorldMap.redraw(): mapWidth=${mapWidth} mapHeight=${mapHeight}`);
 
-  // create new map svg
+  // create new svg map
   d3.select('svg').remove();
   createMapSvg(mapWidth, mapHeight);
 
-  //draw(topology);
+  // draw map topology
+  draw(topology);
 }
+
+
+/**
+ * Draws map topology.
+ *
+ * @param topology Map toploogy.
+ */
+function draw(topology) {
+
+  // draw globe graticules
+  mapSvg.append("path")
+    .datum(graticule)
+    .attr("class", "graticule")
+    .attr("d", geoPath);
+
+
+  // dreaw equator path
+  g.append("path")
+   .datum({type: "LineString", coordinates: [[-180, 0], [-90, 0], [0, 0], [90, 0], [180, 0]]})
+   .attr("class", "equator")
+   .attr("d", geoPath);
+
+  // get country regions
+  var country = g.selectAll(".country").data(topology);
+
+  // draw country regions
+  country.enter().insert("path")
+    .attr("class", "country")
+    .attr("d", geoPath)
+    .attr("id", function(d,i) { return d.id; })
+    .attr("title", function(d,i) { return d.properties.name; })
+    .style("fill", function(d, i) { return d.properties.color; });
+    //.on("mouseover", onRegionMouseOver)
+    //.on("mouseout", onRegionMouseOut);
+  
+  console.log('WorldMap.draw(topology): done!');
+}
+
 </script>
 
 <style scoped>
