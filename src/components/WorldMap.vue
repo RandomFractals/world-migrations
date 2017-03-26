@@ -15,9 +15,15 @@
 
 <script>
 
+/**
+ * Stock D3 world map vue.js comp. setup loosely based on:
+ * 
+ * http://techslides.com/demos/d3/worldmap-template-d3v4.html
+ **/
+
+// import d3 and topojson libs
 const d3 = require('d3');
 const topojson = require('topojson')
-
 //const graticule = d3.geo.graticule();
 const graticule = d3.geoGraticule();
 
