@@ -33,14 +33,14 @@ const mapZoom = d3.zoom()
   .scaleExtent([1, 9])
   .on('zoom', move)
 
-// map tooltip
-const mapToolTip = d3.select('#map-container').append('div').attr('class', 'tooltip hidden');
-
 // map container vars
 var mapContainer, mapWidth, mapHeight;
 
 // map svg vars
 var mapSvg, mapProjection, geoPath, topology, g;
+
+// map tooltip vars
+var mapToolTip, mapToolTipLeftOffset, mapToolTipTopOffset;
 
 // WorldMap.vue comp JS setup
 export default {
@@ -61,6 +61,11 @@ export default {
     mapHeight = mapWidth/2;   
     console.log(`WorldMap.mounted(): mapWidth=${mapWidth} mapHeight=${mapHeight}`);
 
+    // init map tooltip
+    mapToolTip = d3.select('#map-container').append('div').attr('class', 'map-tool-tip hidden');
+    mapToolTipLeftOffset = mapContainer.offsetLeft + 20;
+    mapToolTipTopOffset = mapContainer.offsetTop + 10;
+    
     // create initial map view
     createMapSvg(mapWidth, mapHeight);
 
@@ -189,15 +194,15 @@ function draw(topology) {
   // get all country regions
   var country = g.selectAll('.country').data(topology);
 
-  // draw country regions
+  // draw country regions paths
   country.enter().insert('path')
     .attr('class', 'country')
     .attr('d', geoPath)
-    .attr('id', function(d,i) { return d.id; })
-    .attr('title', function(d,i) { return d.properties.name; })
-    .style('fill', function(d, i) { return d.properties.color; })
-    .on('mouseOver', onRegionMouseOver)
-    .on('mouseOut', onRegionMouseOut);
+    .attr('id', function(d,i) {return d.id;})
+    .attr('title', function(d,i) {return d.properties.name;})
+    .style('fill', function(d, i) {return d.properties.color;})
+    .on('mouseover', onRegionMouseOver)
+    .on('mouseout', onRegionMouseOut);
   
   console.log('WorldMap.draw(topology): done!');
 }
@@ -207,9 +212,9 @@ function draw(topology) {
  * Map region mouse over event handler.
  */
 function onRegionMouseOver(){
-  var mouse = d3.mouse(svg.node()).map( function(d) { return parseInt(d); } );
+  var d3Mouse = d3.mouse(mapSvg.node()).map( function(d) {return parseInt(d);} );
   mapToolTip.classed('hidden', false)
-    .attr('style', `left: ${(mouse[0]+offsetL)}px; top: ${(mouse[1]+offsetT)}px`)
+    .attr('style', `left: ${(d3Mouse[0] + mapToolTipLeftOffset)}px; top: ${(d3Mouse[1] + mapToolTipTopOffset)}px`)
     .html(this.__data__.properties.name);
 }
 
@@ -249,6 +254,17 @@ function onRegionMouseOut(){
 .country:hover{
   stroke: #fff;
   stroke-width: 1.5px;
+}
+
+div.map-tool-tip {
+  color: #222; 
+  background: #fff; 
+  padding: .5em; 
+  text-shadow: #f5f5f5 0 1px 0;
+  border-radius: 2px; 
+  box-shadow: 0px 0px 2px 0px #a6a6a6; 
+  opacity: 0.9; 
+  position: absolute;
 }
 
 .hidden { 
