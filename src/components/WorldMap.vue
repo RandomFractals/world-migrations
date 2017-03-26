@@ -67,18 +67,10 @@ export default {
     // add window resize handler
     d3.select(window).on('resize', onWindowResize);
 
-    // load world map topojson
-    d3.json("data/world-topo-min.json", function(error, world) {
-      // get countires topology
-      var countries = topojson.feature(world, world.objects.countries).features;
-      topology = countries;
-      console.log('WorldMap.loadTopology(): regions count:', countries.length);
-
-      // draw world map topology
-      draw(topology);
-    });
-
+    // load world map topo JSON
+    loadTopology('data/world-topo-min.json');
   }
+
 } // end of WorldMap.vue js setup
 
 /*--------------------- D3 World Map JS Functions ----------------------------------*/
@@ -101,14 +93,15 @@ function createMapSvg(width, height) {
 
   // create map svg
   mapSvg = d3.select("#map-container").append("svg")
-    .attr("width", width)
-    .attr("height", height)
+    .attr('id', 'map-svg')
+    .attr('width', width)
+    .attr('height', height)
     //.call(mapZoom)
-    .on("click", onMapClick)
-    .append("g");
+    .on('click', onMapClick)
+    .append('g');
 
   // add map svg group for region clicks
-  g = mapSvg.append("g").on("click", onMapClick);
+  g = mapSvg.append('g').on('click', onMapClick);
 }
 
 
@@ -133,7 +126,7 @@ function onWindowResize() {
   console.log('WorldMap.onWindowResize()...');
   window.clearTimeout(mapViewThrottleTimer);
     mapViewThrottleTimer = window.setTimeout(function() {
-      redraw();
+      redrawMapSvg();
     }, 200);
 }
 
@@ -141,14 +134,14 @@ function onWindowResize() {
 /**
  * Redraws world map svg on app window resize.
  */
-function redraw() {
+function redrawMapSvg() {
   // get new map view width and height
   mapWidth = mapContainer.offsetWidth;
   mapHeight = mapWidth/2;
   console.log(`WorldMap.redraw(): mapWidth=${mapWidth} mapHeight=${mapHeight}`);
 
   // create new svg map
-  d3.select('svg').remove();
+  d3.select('#map-svg').remove();
   createMapSvg(mapWidth, mapHeight);
 
   // redraw world map topology
@@ -157,39 +150,75 @@ function redraw() {
 
 
 /**
- * Draws svg map topology.
+ * Loads svg map topo JSON data and adds it to map display view.
+ * 
+ * @param topoJsonPath Map topo JSON data path.
+ **/
+function loadTopology(topoJsonPath) {
+  d3.json(topoJsonPath, function(error, world) {
+    // get countries topology
+    var countries = topojson.feature(world, world.objects.countries).features;
+    topology = countries;
+    console.log('WorldMap.loadTopology(): regions count:', countries.length);
+
+    // draw world map topology
+    draw(topology);
+  });
+}
+
+
+/**
+ * Draws svg map topology datum.
  *
- * @param topology SVG map topoJSON topoloogy.
+ * @param topology SVG map topoJSON topology.
  */
 function draw(topology) {
 
   // draw globe graticules
-  mapSvg.append("path")
+  mapSvg.append('path')
     .datum(graticule)
-    .attr("class", "graticule")
-    .attr("d", geoPath);
-
+    .attr('class', 'graticule')
+    .attr('d', geoPath);
 
   // draw equator path
-  g.append("path")
-   .datum({type: "LineString", coordinates: [[-180, 0], [-90, 0], [0, 0], [90, 0], [180, 0]]})
-   .attr("class", "equator")
-   .attr("d", geoPath);
+  g.append('path')
+   .datum({type: 'LineString', coordinates: [[-180, 0], [-90, 0], [0, 0], [90, 0], [180, 0]]})
+   .attr('class', 'equator')
+   .attr('d', geoPath);
 
   // get all country regions
-  var country = g.selectAll(".country").data(topology);
+  var country = g.selectAll('.country').data(topology);
 
   // draw country regions
-  country.enter().insert("path")
-    .attr("class", "country")
-    .attr("d", geoPath)
-    .attr("id", function(d,i) { return d.id; })
-    .attr("title", function(d,i) { return d.properties.name; })
-    .style("fill", function(d, i) { return d.properties.color; });
-    //.on("mouseover", onRegionMouseOver)
-    //.on("mouseout", onRegionMouseOut);
+  country.enter().insert('path')
+    .attr('class', 'country')
+    .attr('d', geoPath)
+    .attr('id', function(d,i) { return d.id; })
+    .attr('title', function(d,i) { return d.properties.name; })
+    .style('fill', function(d, i) { return d.properties.color; })
+    .on('mouseOver', onRegionMouseOver)
+    .on('mouseOut', onRegionMouseOut);
   
   console.log('WorldMap.draw(topology): done!');
+}
+
+
+/**
+ * Map region mouse over event handler.
+ */
+function onRegionMouseOver(){
+  var mouse = d3.mouse(svg.node()).map( function(d) { return parseInt(d); } );
+  mapToolTip.classed('hidden', false)
+    .attr('style', `left: ${(mouse[0]+offsetL)}px; top: ${(mouse[1]+offsetT)}px`)
+    .html(this.__data__.properties.name);
+}
+
+
+/**
+ * Map region mouse out event handler.
+ */
+function onRegionMouseOut(){
+  mapToolTip.classed('hidden', true);
 }
 
 </script>
@@ -220,5 +249,9 @@ function draw(topology) {
 .country:hover{
   stroke: #fff;
   stroke-width: 1.5px;
+}
+
+.hidden { 
+  display: none; 
 }
 </style>
