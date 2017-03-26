@@ -23,7 +23,8 @@
 
 // import d3 and topojson libs
 const d3 = require('d3');
-const topojson = require('topojson')
+const topojson = require('topojson');
+
 //const graticule = d3.geo.graticule();
 const graticule = d3.geoGraticule();
 
@@ -31,7 +32,7 @@ const graticule = d3.geoGraticule();
 const mapZoom = d3.zoom()
   // .extent([1, 9])
   .scaleExtent([1, 9])
-  .on('zoom', move)
+  .on('zoom', onMapZoom);
 
 // map container vars
 var mapContainer, mapWidth, mapHeight;
@@ -101,7 +102,7 @@ function createMapSvg(width, height) {
     .attr('id', 'map-svg')
     .attr('width', width)
     .attr('height', height)
-    //.call(mapZoom)
+    .call(mapZoom)
     .on('click', onMapClick)
     .append('g');
 
@@ -116,10 +117,6 @@ function createMapSvg(width, height) {
 function onMapClick() {
   var latLon = mapProjection.invert(d3.mouse(this));
   console.log('WorldMap.onMapClick():coordinates:', latLon);
-}
-
-function move() {
-  console.log('move');
 }
 
 
@@ -224,6 +221,36 @@ function onRegionMouseOver(){
  */
 function onRegionMouseOut(){
   mapToolTip.classed('hidden', true);
+}
+
+
+/**
+ * D3 svg zoom event handler.
+ */
+function onMapZoom() {
+
+  //var t = d3.event.translate;
+  var t = [d3.event.transform.x, d3.event.transform.y];
+  //var s = d3.event.scale; 
+  var s = d3.event.transform.k;
+  var zscale = s;
+  var h = mapHeight/4;
+
+  t[0] = Math.min(
+    (mapWidth/mapHeight)  * (s - 1), 
+    Math.max( mapWidth * (1 - s), t[0] )
+  );
+
+  t[1] = Math.min(
+    h * (s - 1) + h * s, 
+    Math.max(mapHeight  * (1 - s) - h * s, t[1])
+  );
+
+  //zoom.translateBy(t);
+  g.attr("transform", "translate(" + t + ")scale(" + s + ")");
+
+  //adjust the country hover stroke width based on zoom level
+  d3.selectAll(".country").style("stroke-width", 1.5 / s);
 }
 
 </script>
