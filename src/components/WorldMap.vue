@@ -51,19 +51,23 @@ export default {
     }
   },
   created: function() {
-    console.log('WorldMap:created()');
+    console.log('WorldMap.created()');
   },  
   mounted: function() {
     // init map container
     mapContainer = document.getElementById('map-container');
     mapWidth = mapContainer.offsetWidth;
     mapHeight = mapWidth/2;   
-    console.log(`WorldMap:mounted(): mapWidth=${mapWidth} mapHeight=${mapHeight}`);
+    console.log(`WorldMap.mounted(): mapWidth=${mapWidth} mapHeight=${mapHeight}`);
 
     // create initial map view
     createMapSvg(mapWidth, mapHeight);
+
+    // add window resize handler
+    d3.select(window).on('resize', onWindowResize);
   }
 }
+
 
 /**
  * Creates d3 maps svg for the specified map view width and height.
@@ -78,7 +82,7 @@ function createMapSvg(width, height) {
     .translate([(width/2), (height/2)])
     .scale(width/2/Math.PI);
 
-  //path = d3.geo.path().projection(projection);
+  //geoPath = d3.geo.path().projection(projection);
   geoPath = d3.geoPath().projection(mapProjection);
 
   // create map svg
@@ -99,11 +103,24 @@ function createMapSvg(width, height) {
  */
 function onMapClick() {
   var latLon = mapProjection.invert(d3.mouse(this));
-  console.log('WorldMap:onMapClick():coordinates:', latLon);
+  console.log('WorldMap.onMapClick():coordinates:', latLon);
 }
 
 function move() {
   console.log('move');
+}
+
+
+/**
+ * Map view resize throttle timer and redraw.
+ */
+var mapViewThrottleTimer;
+function onWindowResize() {
+  console.log('WorldMap.onWindowResize()...');
+  window.clearTimeout(mapViewThrottleTimer);
+    mapViewThrottleTimer = window.setTimeout(function() {
+      redraw();
+    }, 200);
 }
 
 
@@ -114,7 +131,7 @@ function redraw() {
   // get new map view width and height
   mapWidth = mapContainer.offsetWidth;
   mapHeight = mapWidth/2;
-  console.log(`WorldMap:redraw(): mapWidth=${mapWidth} mapHeight=${mapHeight}`);
+  console.log(`WorldMap.redraw(): mapWidth=${mapWidth} mapHeight=${mapHeight}`);
 
   // create new map svg
   d3.select('svg').remove();
@@ -147,4 +164,8 @@ function redraw() {
   stroke-width: 1px;
 }
 
+.country:hover{
+  stroke: #fff;
+  stroke-width: 1.5px;
+}
 </style>
