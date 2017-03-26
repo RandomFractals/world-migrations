@@ -40,7 +40,7 @@ const mapToolTip = d3.select('#map-container').append('div').attr('class', 'tool
 var mapContainer, mapWidth, mapHeight;
 
 // map svg vars
-var mapSvg, mapProjection, topo, path, g;
+var mapSvg, mapProjection, topo, geoPath, g;
 
 export default {
   name: 'worldMap',
@@ -60,25 +60,39 @@ export default {
     mapHeight = mapWidth/2;   
     console.log(`WorldMap:mounted(): mapWidth=${mapWidth} mapHeight=${mapHeight}`);
 
-    // cue in projection :)
-    // mapProjection = d3.geo.mercator()
-    mapProjection = d3.geoMercator()
-      .translate([(mapWidth/2), (mapHeight/2)])
-      .scale(mapWidth/2/Math.PI);
-
-    //path = d3.geo.path().projection(projection);
-    path = d3.geoPath().projection(mapProjection);
-
-    mapSvg = d3.select("#map-container").append("svg")
-      .attr("width", mapWidth)
-      .attr("height", mapHeight)
-      //.call(mapZoom)
-      .on("click", onMapClick)
-      .append("g");
-
-    g = mapSvg.append("g").on("click", onMapClick);
+    // create initial map view
+    createMapSvg(mapWidth, mapHeight);
   }
 }
+
+/**
+ * Creates d3 maps svg for the specified map view width and height.
+ * 
+ * @param width Map view width.
+ * @param height Map view height.
+ */
+function createMapSvg(width, height) {
+  // cue in projection :)
+  // mapProjection = d3.geo.mercator()
+  mapProjection = d3.geoMercator()
+    .translate([(width/2), (height/2)])
+    .scale(width/2/Math.PI);
+
+  //path = d3.geo.path().projection(projection);
+  geoPath = d3.geoPath().projection(mapProjection);
+
+  // create map svg
+  mapSvg = d3.select("#map-container").append("svg")
+    .attr("width", width)
+    .attr("height", height)
+    //.call(mapZoom)
+    .on("click", onMapClick)
+    .append("g");
+
+  // add map svg group for region clicks
+  g = mapSvg.append("g").on("click", onMapClick);
+}
+
 
 /**
  * Map click coordinates translation event handler.
@@ -92,14 +106,20 @@ function move() {
   console.log('move');
 }
 
+
 /**
- * Redraws world map svg.
+ * Redraws world map svg on app window resize.
  */
 function redraw() {
+  // get new map view width and height
   mapWidth = mapContainer.offsetWidth;
   mapHeight = mapWidth/2;
+  console.log(`WorldMap:redraw(): mapWidth=${mapWidth} mapHeight=${mapHeight}`);
+
+  // create new map svg
   d3.select('svg').remove();
-  //createMap(mapWidth, mapHeight);
+  createMapSvg(mapWidth, mapHeight);
+
   //draw(topo);
 }
 </script>
