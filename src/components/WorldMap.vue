@@ -70,7 +70,7 @@ export default {
       .on("click", onMapClick)
       .append("g");
 
-    g = svg.append("g").on("click", onMapClick);
+    g = mapSvg.append("g").on("click", onMapClick);
   }
 }
 
@@ -78,7 +78,7 @@ export default {
  * Map click coordinates translation event handler.
  */
 function onMapClick() {
-  var latLon = projection.invert(d3.mouse(this));
+  var latLon = mapProjection.invert(d3.mouse(this));
   console.log('WorldMap:onMapClick():coordinates:', latLon);
 }
 
