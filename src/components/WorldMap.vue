@@ -19,7 +19,7 @@
  * Stock D3 world map vue.js comp. setup loosely based on:
  * 
  * http://techslides.com/demos/d3/worldmap-template-d3v4.html
- **/
+ */
 
 // import d3 and topojson libs
 const d3 = require('d3');
@@ -42,6 +42,7 @@ var mapContainer, mapWidth, mapHeight;
 // map svg vars
 var mapSvg, mapProjection, geoPath, topology, g;
 
+// WorldMap.vue comp JS setup
 export default {
   name: 'worldMap',
   data () {
@@ -66,19 +67,21 @@ export default {
     // add window resize handler
     d3.select(window).on('resize', onWindowResize);
 
-    // load world topojson
+    // load world map topojson
     d3.json("data/world-topo-min.json", function(error, world) {
+      // get countires topology
       var countries = topojson.feature(world, world.objects.countries).features;
       topology = countries;
       console.log('WorldMap.loadTopology(): regions count:', countries.length);
 
-      // draw map topology
+      // draw world map topology
       draw(topology);
     });
 
   }
-}
+} // end of WorldMap.vue js setup
 
+/*--------------------- D3 World Map JS Functions ----------------------------------*/
 
 /**
  * Creates d3 maps svg for the specified map view width and height.
@@ -148,15 +151,15 @@ function redraw() {
   d3.select('svg').remove();
   createMapSvg(mapWidth, mapHeight);
 
-  // draw map topology
+  // redraw world map topology
   draw(topology);
 }
 
 
 /**
- * Draws map topology.
+ * Draws svg map topology.
  *
- * @param topology Map toploogy.
+ * @param topology SVG map topoJSON topoloogy.
  */
 function draw(topology) {
 
@@ -167,13 +170,13 @@ function draw(topology) {
     .attr("d", geoPath);
 
 
-  // dreaw equator path
+  // draw equator path
   g.append("path")
    .datum({type: "LineString", coordinates: [[-180, 0], [-90, 0], [0, 0], [90, 0], [180, 0]]})
    .attr("class", "equator")
    .attr("d", geoPath);
 
-  // get country regions
+  // get all country regions
   var country = g.selectAll(".country").data(topology);
 
   // draw country regions
