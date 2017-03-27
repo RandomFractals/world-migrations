@@ -12,11 +12,11 @@ from day 2 of dev (simple 80/20 app vue layout setup)
 
 ![alt tag](https://github.com/RandomFractals/world-migrations/blob/master/screens/worldMigrations80-20MapListSplitLayout.png)
 
-next up: day 3 of dev: mapping the world with d3 v4
+next up: day 3 of dev: mapping the world with d3:
 
 http://techslides.com/demos/d3/worldmap-template-d3v4.html
 
-![alt tag](https://github.com/RandomFractals/world-migrations/blob/master/screens/d3V4WorldMap.png)
+![alt tag](https://github.com/RandomFractals/world-migrations/blob/master/screens/worldMapTopoBasicDone.png)
 
 ## Build Setup
 
