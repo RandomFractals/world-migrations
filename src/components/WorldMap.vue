@@ -38,7 +38,7 @@ const mapZoom = d3.zoom()
 var mapContainer, mapWidth, mapHeight;
 
 // map svg vars
-var mapSvg, mapProjection, geoPath, topology, g;
+var mapSvg, topologySvgGroup, mapProjection, geoPath, topology;
 
 // map tooltip vars
 var mapToolTip, mapToolTipLeftOffset, mapToolTipTopOffset;
@@ -79,6 +79,7 @@ export default {
 
 } // end of WorldMap.vue js setup
 
+
 /*--------------------- D3 World Map JS Functions ----------------------------------*/
 
 /**
@@ -89,12 +90,12 @@ export default {
  */
 function createMapSvg(width, height) {
   // cue in projection :)
-  // mapProjection = d3.geo.mercator()
+  // mapProjection = d3.geo.mercator() // d3 v4
   mapProjection = d3.geoMercator()
     .translate([(width/2), (height/2)])
     .scale(width/2/Math.PI);
 
-  //geoPath = d3.geo.path().projection(projection);
+  //geoPath = d3.geo.path().projection(mapProjection); // d3 v4
   geoPath = d3.geoPath().projection(mapProjection);
 
   // create map svg
@@ -107,7 +108,7 @@ function createMapSvg(width, height) {
     .append('g');
 
   // add map svg group for region clicks
-  g = mapSvg.append('g').on('click', onMapClick);
+  topologySvgGroup = mapSvg.append('g').on('click', onMapClick);
 }
 
 
@@ -147,7 +148,7 @@ function redrawMapSvg() {
   createMapSvg(mapWidth, mapHeight);
 
   // redraw world map topology
-  draw(topology);
+  drawToplogy(topology);
 }
 
 
@@ -162,9 +163,7 @@ function loadTopology(topoJsonPath) {
     var countries = topojson.feature(world, world.objects.countries).features;
     topology = countries;
     console.log('WorldMap.loadTopology(): regions count:', countries.length);
-
-    // draw world map topology
-    draw(topology);
+    drawTopology(topology);
   });
 }
 
@@ -174,7 +173,7 @@ function loadTopology(topoJsonPath) {
  *
  * @param topology SVG map topoJSON topology.
  */
-function draw(topology) {
+function drawTopology(topology) {
 
   // draw globe graticules
   mapSvg.append('path')
@@ -183,13 +182,13 @@ function draw(topology) {
     .attr('d', geoPath);
 
   // draw equator path
-  g.append('path')
+  topologySvgGroup.append('path')
    .datum({type: 'LineString', coordinates: [[-180, 0], [-90, 0], [0, 0], [90, 0], [180, 0]]})
    .attr('class', 'equator')
    .attr('d', geoPath);
 
   // get all country regions
-  var country = g.selectAll('.country').data(topology);
+  var country = topologySvgGroup.selectAll('.country').data(topology);
 
   // draw country regions paths
   country.enter().insert('path')
@@ -247,7 +246,7 @@ function onMapZoom() {
   );
 
   //zoom.translateBy(t);
-  g.attr("transform", "translate(" + t + ")scale(" + s + ")");
+  topologySvgGroup.attr("transform", "translate(" + t + ")scale(" + s + ")");
 
   //adjust the country hover stroke width based on zoom level
   d3.selectAll(".country").style("stroke-width", 1.5 / s);
