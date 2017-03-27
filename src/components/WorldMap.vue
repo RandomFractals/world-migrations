@@ -235,21 +235,21 @@ function onMapZoom() {
   var zscale = s;
   var h = mapHeight/4;
 
-  t[0] = Math.min(
-    (mapWidth/mapHeight)  * (s - 1), 
-    Math.max( mapWidth * (1 - s), t[0] )
+  t[0] = Math.min( 
+    (mapWidth/mapHeight)*(s-1), 
+    Math.max(mapWidth*(1-s), t[0]) 
   );
 
   t[1] = Math.min(
-    h * (s - 1) + h * s, 
-    Math.max(mapHeight  * (1 - s) - h * s, t[1])
+    h*(s-1) + h*s,
+    Math.max(mapHeight*(1-s) - h*s, t[1])
   );
 
   //zoom.translateBy(t);
   topologySvgGroup.attr('transform', `translate(${t})scale(${s})`);
 
-  //adjust the country hover stroke width based on zoom level
-  d3.selectAll('.country').style('stroke-width', 1.5 / s);
+  //adjust country path hover stroke width based on zoom level
+  d3.selectAll('.country').style('stroke-width', 1.5/s);
 }
 
 </script>
