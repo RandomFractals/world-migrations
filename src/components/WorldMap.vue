@@ -265,25 +265,17 @@ function onMapZoom() {
   overflow: hidden;  
 }
 
-path {
-  stroke: #999;
-  stroke-width: .5px;
-}
-
 .graticule {
   fill: none;
-  stroke: #bbb;
+  stroke: #ccc;
   stroke-width: .5px;
-  stroke-opacity: .5;
+  stroke-opacity: .2;
 }
 
 .equator {
-  stroke: #999;
+  stroke: #bbb;
   stroke-width: .5px;
-}
-
-.country {
-  stroke: #ccc;
+  stroke-opacity: .4;
 }
 
 .country:hover{
