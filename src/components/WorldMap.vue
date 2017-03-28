@@ -8,6 +8,7 @@
       <md-card-content>
         <div id="map-container" class="map-container">
         </div>
+        <div id="map-tool-tip" class="map-tool-tip hidden"></div>
       </md-card-content>
     </md-card-area>
   </md-card>
@@ -35,13 +36,13 @@ const mapZoom = d3.zoom()
   .on('zoom', onMapZoom);
 
 // map container vars
-var mapContainer, mapWidth, mapHeight;
+let mapContainer, mapWidth, mapHeight;
 
 // map svg vars
-var mapSvg, topologySvgGroup, mapProjection, geoPath, topology;
+let mapSvg, topologySvgGroup, mapProjection, geoPath, topology;
 
 // map tooltip vars
-var mapToolTip, mapToolTipLeftOffset, mapToolTipTopOffset;
+let mapToolTip, mapToolTipLeftOffset, mapToolTipTopOffset;
 
 // WorldMap.vue comp JS setup
 export default {
@@ -63,7 +64,7 @@ export default {
     console.log(`WorldMap.mounted(): mapWidth=${mapWidth} mapHeight=${mapHeight}`);
 
     // init map tooltip
-    mapToolTip = d3.select('#map-container').append('div').attr('class', 'map-tool-tip hidden');
+    mapToolTip = d3.select('#map-tool-tip');
     mapToolTipLeftOffset = mapContainer.offsetLeft + 20;
     mapToolTipTopOffset = mapContainer.offsetTop + 10;
     
@@ -200,7 +201,7 @@ function drawTopology(topology) {
     .on('mouseover', onRegionMouseOver)
     .on('mouseout', onRegionMouseOut);
   
-  console.log('WorldMap.draw(topology): done!');
+  console.log('WorldMap.drawTopology(topology): done!');
 }
 
 
@@ -282,10 +283,11 @@ function onMapZoom() {
   stroke-width: 1.5px;
 }
 
-div.map-tool-tip {
+.map-tool-tip {
   color: #222; 
-  background: #fff; 
-  padding: .5em; 
+  background: #f6f6f6; 
+  font-size: .8em;
+  padding: 3px; 
   text-shadow: #f5f5f5 0 1px 0;
   border-radius: 2px; 
   box-shadow: 0px 0px 2px 0px #a6a6a6; 
