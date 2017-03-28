@@ -117,7 +117,7 @@ function createMapSvg(width, height) {
  * Map click coordinates translation event handler.
  */
 function onMapClick() {
-  var latLon = mapProjection.invert(d3.mouse(this));
+  let latLon = mapProjection.invert(d3.mouse(this));
   console.log('WorldMap.onMapClick():coordinates:', latLon);
 }
 
@@ -125,7 +125,7 @@ function onMapClick() {
 /**
  * Map view resize throttle timer and redraw.
  */
-var mapViewThrottleTimer;
+let mapViewThrottleTimer;
 function onWindowResize() {
   console.log('WorldMap.onWindowResize()...');
   window.clearTimeout(mapViewThrottleTimer);
@@ -161,7 +161,7 @@ function redrawMapSvg() {
 function loadTopology(topoJsonPath) {
   d3.json(topoJsonPath, function(error, world) {
     // get countries topology
-    var countries = topojson.feature(world, world.objects.countries).features;
+    let countries = topojson.feature(world, world.objects.countries).features;
     topology = countries;
     console.log('WorldMap.loadTopology(): regions count:', countries.length);
     drawTopology(topology);
@@ -189,10 +189,10 @@ function drawTopology(topology) {
    .attr('d', geoPath);
 
   // get all country regions
-  var country = topologySvgGroup.selectAll('.country').data(topology);
+  let countries = topologySvgGroup.selectAll('.country').data(topology);
 
   // draw country regions paths
-  country.enter().insert('path')
+  countries.enter().insert('path')
     .attr('class', 'country')
     .attr('d', geoPath)
     .attr('id', function(d,i) {return d.id;})
@@ -209,7 +209,7 @@ function drawTopology(topology) {
  * Map region mouse over event handler.
  */
 function onRegionMouseOver(){
-  var d3Mouse = d3.mouse(mapSvg.node()).map( function(d) {return parseInt(d);} );
+  let d3Mouse = d3.mouse(mapSvg.node()).map( function(d) {return parseInt(d);} );
   mapToolTip.classed('hidden', false)
     .attr('style', `left: ${(d3Mouse[0] + mapToolTipLeftOffset)}px; top: ${(d3Mouse[1] + mapToolTipTopOffset)}px`)
     .html(this.__data__.properties.name);
@@ -230,11 +230,10 @@ function onRegionMouseOut(){
 function onMapZoom() {
 
   //var t = d3.event.translate;
-  var t = [d3.event.transform.x, d3.event.transform.y];
+  let t = [d3.event.transform.x, d3.event.transform.y];
   //var s = d3.event.scale; 
-  var s = d3.event.transform.k;
-  var zscale = s;
-  var h = mapHeight/4;
+  let s = d3.event.transform.k;
+  let h = mapHeight/4;
 
   t[0] = Math.min( 
     (mapWidth/mapHeight)*(s-1), 
