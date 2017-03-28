@@ -16,7 +16,7 @@ next up: day 3 of dev: mapping the world with d3:
 
 http://techslides.com/demos/d3/worldmap-template-d3v4.html
 
-![alt tag](https://github.com/RandomFractals/world-migrations/blob/master/screens/worldMapTopoBasicDone.png)
+![alt tag](https://github.com/RandomFractals/world-migrations/blob/master/screens/worldMapInteractiveV1.png)
 
 ## Build Setup
 
