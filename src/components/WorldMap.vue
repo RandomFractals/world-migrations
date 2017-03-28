@@ -254,7 +254,7 @@ function onMapZoom() {
 
 </script>
 
-<style scoped>
+<style>
 
 /* Map styles */
 .map-container {
@@ -265,6 +265,11 @@ function onMapZoom() {
   overflow: hidden;  
 }
 
+path {
+  stroke: #999;
+  stroke-width: .5px;
+}
+
 .graticule {
   fill: none;
   stroke: #bbb;
@@ -273,13 +278,17 @@ function onMapZoom() {
 }
 
 .equator {
+  stroke: #999;
+  stroke-width: .5px;
+}
+
+.country {
   stroke: #ccc;
-  stroke-width: 1px;
 }
 
 .country:hover{
   stroke: #fff;
-  stroke-width: 1.5px;
+  stroke-width: 1px;
 }
 
 .map-tool-tip {
