@@ -2,20 +2,18 @@
   <md-card class="card map-card">
     <md-card-area md-inset>
       <md-card-header class="card-header">
-        <div class="card-title md-title">{{ title }}</div>
+        <div class="card-title md-title">{{selectedCountry}} {{ title }}</div>
         <div class="card-subtitle md-subhead">
           {{ subtitle }}
-          <select>
+          <select id="country-list" v-model="selectedCountry">
             <option selected value=" ">All Countries</option>
-            <option v-for="country in countries">
-              {{ country.properties.name }}
-            </option>
+            <option v-for="country in countries" 
+              v-bind:value="country.properties.name">{{ country.properties.name }}</option>
           </select>
         </div>      
       </md-card-header>
       <md-card-content>
-        <div id="map-container" class="map-container">
-        </div>
+        <div id="map-container" class="map-container"></div>
         <div id="map-tool-tip" class="map-tool-tip hidden"></div>        
       </md-card-content>
     </md-card-area>
@@ -59,6 +57,7 @@ export default {
     return {
       title: 'Migrants',
       subtitle: 'country:',
+      selectedCountry: 'Aruba',
       topology: topology
     }
   },
