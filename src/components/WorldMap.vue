@@ -6,6 +6,7 @@
         <div class="card-subtitle md-subhead">
           {{ subtitle }}
           <select>
+            <option selected value=" ">All Countries</option>
             <option v-for="country in countries">
               {{ country.properties.name }}
             </option>
@@ -56,8 +57,8 @@ export default {
   name: 'worldMap',
   data () {
     return {
-      title: '[map title]',
-      subtitle: 'select country:',
+      title: 'Migrants',
+      subtitle: 'country:',
       topology: topology
     }
   },

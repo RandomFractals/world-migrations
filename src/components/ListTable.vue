@@ -32,8 +32,8 @@ export default {
   name: 'listTable',
   data () {
     return {
-      title: '[list title]',
-      subtitle: '[subtitle]'
+      title: 'Migrants',
+      subtitle: 'All Countries'
     }
   }
 }
