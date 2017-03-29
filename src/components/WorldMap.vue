@@ -3,12 +3,19 @@
     <md-card-area md-inset>
       <md-card-header class="card-header">
         <div class="card-title md-title">{{ title }}</div>
-        <div class="card-subtitle md-subhead">{{ subtitle }}</div>      
+        <div class="card-subtitle md-subhead">
+          {{ subtitle }}
+          <select>
+            <option v-for="country in countries">
+              {{ country.properties.name }}
+            </option>
+          </select>
+        </div>      
       </md-card-header>
       <md-card-content>
         <div id="map-container" class="map-container">
         </div>
-        <div id="map-tool-tip" class="map-tool-tip hidden"></div>
+        <div id="map-tool-tip" class="map-tool-tip hidden"></div>        
       </md-card-content>
     </md-card-area>
   </md-card>
@@ -39,7 +46,7 @@ const mapZoom = d3.zoom()
 let mapContainer, mapWidth, mapHeight;
 
 // map svg vars
-let mapSvg, topologySvgGroup, mapProjection, geoPath, topology;
+let mapVue, mapSvg, topologySvgGroup, mapProjection, geoPath, topology;
 
 // map tooltip vars
 let mapToolTip, mapToolTipLeftOffset, mapToolTipTopOffset;
@@ -50,14 +57,16 @@ export default {
   data () {
     return {
       title: '[map title]',
-      subtitle: '[subtitle]'
+      subtitle: 'select country:',
+      topology: topology
     }
   },
   created: function() {
     console.log('WorldMap.created()');
   },  
   mounted: function() {
-    // init map container
+    // init map view
+    mapVue = this;
     mapContainer = document.getElementById('map-container');
     mapWidth = mapContainer.offsetWidth;
     mapHeight = mapWidth/2;   
@@ -76,6 +85,11 @@ export default {
 
     // load world map topo JSON
     loadTopology('data/world-topo-min.json');
+  },
+  computed: {
+    countries: function() {
+      return this.topology;
+    }
   }
 
 } // end of WorldMap.vue js setup
@@ -161,9 +175,9 @@ function redrawMapSvg() {
 function loadTopology(topoJsonPath) {
   d3.json(topoJsonPath, function(error, world) {
     // get countries topology
-    let countries = topojson.feature(world, world.objects.countries).features;
-    topology = countries;
-    console.log('WorldMap.loadTopology(): regions count:', countries.length);
+    topology = topojson.feature(world, world.objects.countries).features;
+    mapVue.topology = topology;    
+    console.log('WorldMap.loadTopology(): regions count:', topology.length);
     drawTopology(topology);
   });
 }
