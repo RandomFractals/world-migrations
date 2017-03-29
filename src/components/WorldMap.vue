@@ -2,13 +2,15 @@
   <md-card class="card map-card">
     <md-card-area md-inset>
       <md-card-header class="card-header">
-        <div class="card-title md-title">{{selectedCountry}} {{ title }}</div>
+        <div class="card-title md-title">
+          {{selectedCountryName}} {{ mapTitle }}
+        </div>
         <div class="card-subtitle md-subhead">
-          {{ subtitle }}
-          <select id="country-list" v-model="selectedCountry">
-            <option selected value=" ">All Countries</option>
+          {{ mapSubtitle }}
+          <select id="country-list" v-model="selectedCountryIndex">
+            <option selected value="-1">All Countries</option>
             <option v-for="country in countries" 
-              v-bind:value="country.properties.name">{{ country.properties.name }}</option>
+              v-bind:value="country.id">{{ country.properties.name }}</option>
           </select>
         </div>      
       </md-card-header>
@@ -55,10 +57,10 @@ export default {
   name: 'worldMap',
   data () {
     return {
-      title: 'Migrants',
-      subtitle: 'country:',
-      selectedCountry: 'Aruba',
-      topology: topology
+      mapTitle: 'Migrants',
+      mapSubtitle: 'country:',
+      topology: topology,
+      selectedCountryIndex: -1
     }
   },
   created: function() {
@@ -89,6 +91,14 @@ export default {
   computed: {
     countries: function() {
       return this.topology;
+    },
+    selectedCountryName: function() {
+      let countryName = 'World';
+      if ( this.selectedCountryIndex >= 0) {
+        countryName = this.topology[this.selectedCountryIndex].properties.name;
+      }
+      console.log('WorldMap.selectedCountryName:', countryName);
+      return countryName;
     }
   }
 
@@ -210,7 +220,7 @@ function drawTopology(topology) {
   countries.enter().insert('path')
     .attr('class', 'country')
     .attr('d', geoPath)
-    .attr('id', function(d,i) {return d.id;})
+    .attr('id', function(d,i) {return `country-${d.id}`;})
     .attr('title', function(d,i) {return d.properties.name;})
     .style('fill', function(d, i) {return d.properties.color;})
     .on('mouseover', onRegionMouseOver)
