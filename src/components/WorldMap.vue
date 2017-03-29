@@ -178,6 +178,7 @@ function loadTopology(topoJsonPath) {
     topology = topojson.feature(world, world.objects.countries).features;
     mapVue.topology = topology;    
     console.log('WorldMap.loadTopology(): regions count:', topology.length);
+    //console.log(mapVue);
     drawTopology(topology);
   });
 }
