@@ -47,7 +47,8 @@ const mapZoom = d3.zoom()
 let mapContainer, mapWidth, mapHeight;
 
 // map svg vars
-let mapVue, mapSvg, topologySvgGroup, mapProjection, 
+let mapVue, mapSvg, 
+  topologySvgGroup, mapProjection, 
   geoPath, topology, selectedRegion;
 
 // map tooltip vars
@@ -134,13 +135,15 @@ function createMapSvg(width, height) {
   mapSvg = d3.select("#map-container").append("svg")
     .attr('id', 'map-svg')
     .attr('width', width)
-    .attr('height', height)
-    .call(mapZoom)
-    .on('click', onMapClick)
-    .append('g');
+    .attr('height', height);
+    //.call(mapZoom);
+    //.on('click', onMapClick);
+    //.append('g');
 
   // add map svg group for region clicks
-  topologySvgGroup = mapSvg.append('g').on('click', onMapClick);
+  topologySvgGroup = mapSvg.append('g')
+    .attr('id', 'topology');
+    //.on('click', onMapClick);
 }
 
 
@@ -148,6 +151,7 @@ function createMapSvg(width, height) {
  * Map click coordinates translation event handler.
  */
 function onMapClick() {
+  console.log('map click');
   let latLon = mapProjection.invert(d3.mouse(this));
   console.log('WorldMap.onMapClick():coordinates:', latLon);
 }
@@ -209,7 +213,7 @@ function loadTopology(topoJsonPath) {
 function drawTopology(topology) {
 
   // draw globe graticules
-  mapSvg.append('path')
+  topologySvgGroup.append('path')
     .datum(graticule)
     .attr('class', 'graticule')
     .attr('d', geoPath);
@@ -224,14 +228,15 @@ function drawTopology(topology) {
   let countries = topologySvgGroup.selectAll('.country').data(topology);
 
   // draw country regions paths
-  countries.enter().insert('path')
+  countries.enter().append('path')
     .attr('class', 'country')
     .attr('d', geoPath)
     .attr('id', function(d,i) {return `country-${d.id}`;})
     .attr('title', function(d,i) {return d.properties.name;})
     //.style('fill', function(d, i) {return d.properties.color;})
     .on('mouseover', onRegionMouseOver)
-    .on('mouseout', onRegionMouseOut);
+    .on('mouseout', onRegionMouseOut)
+    .on('click', onRegionClick);
   
   console.log('WorldMap.drawTopology(topology): done!');
 }
@@ -257,10 +262,18 @@ function onRegionMouseOut(){
 
 
 /**
+ * Map region click event handler.
+ */
+function onRegionClick(d, i) {
+  mapVue.selectedCountryIndex = d.id;
+  console.log('WorldMap.onRegionClick(): region:', d.properties.name);
+}
+
+
+/**
  * D3 svg zoom event handler.
  */
 function onMapZoom() {
-
   //var t = d3.event.translate;
   let t = [d3.event.transform.x, d3.event.transform.y];
   //var s = d3.event.scale; 
@@ -294,7 +307,7 @@ function onMapZoom() {
   margin: 0px;
   height: 100%;
   width: 100%;
-  overflow: hidden;  
+  overflow: hidden;
 }
 
 .graticule {
