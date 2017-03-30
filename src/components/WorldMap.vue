@@ -222,7 +222,7 @@ function drawTopology(topology) {
     .attr('d', geoPath)
     .attr('id', function(d,i) {return `country-${d.id}`;})
     .attr('title', function(d,i) {return d.properties.name;})
-    .style('fill', function(d, i) {return d.properties.color;})
+    //.style('fill', function(d, i) {return d.properties.color;})
     .on('mouseover', onRegionMouseOver)
     .on('mouseout', onRegionMouseOut);
   
@@ -303,9 +303,16 @@ function onMapZoom() {
   stroke-opacity: .4;
 }
 
+.country {
+  fill: #eee;
+  stroke: #999;
+}
 .country:hover{
-  stroke: #fff;
+  stroke: #666;
   stroke-width: 1px;
+}
+.selected-country {
+  stroke: #333;
 }
 
 .map-tool-tip {
