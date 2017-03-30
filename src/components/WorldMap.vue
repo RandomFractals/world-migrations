@@ -47,7 +47,8 @@ const mapZoom = d3.zoom()
 let mapContainer, mapWidth, mapHeight;
 
 // map svg vars
-let mapVue, mapSvg, topologySvgGroup, mapProjection, geoPath, topology;
+let mapVue, mapSvg, topologySvgGroup, mapProjection, 
+  geoPath, topology, selectedRegion;
 
 // map tooltip vars
 let mapToolTip, mapToolTipLeftOffset, mapToolTipTopOffset;
@@ -96,6 +97,12 @@ export default {
       let countryName = 'World';
       if ( this.selectedCountryIndex >= 0) {
         countryName = this.topology[this.selectedCountryIndex].properties.name;
+        // FIXME: should be handled elsewhere!!!
+        if (selectedRegion) {
+          selectedRegion.classed('selected-country', false);
+        }
+        selectedRegion = d3.select(`#country-${this.selectedCountryIndex}`)
+          .classed('selected-country', true);        
       }
       console.log('WorldMap.selectedCountryName:', countryName);
       return countryName;
@@ -306,12 +313,14 @@ function onMapZoom() {
 .country {
   fill: #eee;
   stroke: #999;
+  stroke-width: .5px;
 }
 .country:hover{
   stroke: #666;
   stroke-width: 1px;
 }
 .selected-country {
+  fill: #aaa;
   stroke: #333;
 }
 
