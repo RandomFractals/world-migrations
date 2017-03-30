@@ -237,9 +237,17 @@ function drawTopology(topology) {
     .on('mouseover', onRegionMouseOver)
     .on('mouseout', onRegionMouseOut)
     .on('click', onRegionClick);
+
+  // add some capitals for good map UX reference from csv (updated it as needed)
+  d3.csv('data/country-capitals.csv', function(err, capitals) {
+    capitals.forEach( function(i) {
+      addPoint(i.CapitalLongitude, i.CapitalLatitude, i.CapitalName);
+    });
+  });    
   
   console.log('WorldMap.drawTopology(topology): done!');
-}
+
+} // end of drawTopology()
 
 
 /**
@@ -297,6 +305,31 @@ function onMapZoom() {
   d3.selectAll('.country').style('stroke-width', 1.5/s);
 }
 
+
+/**
+ * Adds a city point to the map.
+ */
+function addPoint(lon, lat, text) {
+
+  let pointGroup = topologySvgGroup.append('g').attr('class', 'city');
+  let x = mapProjection([lon, lat])[0];
+  let y = mapProjection([lon, lat])[1];
+
+  pointGroup.append('circle')
+    .attr('cx', x)
+    .attr('cy', y)
+    .attr('class', 'city')
+    .attr('r', 1.5);
+
+  if ( text.length > 0) {
+    pointGroup.append('text')
+      .attr('x', x+2)
+      .attr('y', y+2)
+      .attr('class', 'city-text')
+      .text(text);
+  }
+}
+
 </script>
 
 <style>
@@ -328,13 +361,20 @@ function onMapZoom() {
   stroke: #999;
   stroke-width: .5px;
 }
+
 .country:hover{
   stroke: #666;
   stroke-width: 1px;
 }
+
 .selected-country {
   fill: #aaa;
   stroke: #333;
+}
+
+.city-text {
+  font-size: 10px;
+  text-transform: capitalize;
 }
 
 .map-tool-tip {
